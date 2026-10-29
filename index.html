@@ -8,7 +8,7 @@
 <link rel="apple-touch-icon" href="icons/icon-180.png">
 <link rel="icon" href="icons/icon-180.png">
 <style>html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}[hidden]{display:none!important}</style>
-<title>Site Schedule 1.0.0 (test)</title>
+<title>Site Schedule 2.0.0-dev (test)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
@@ -196,7 +196,7 @@ button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-vis
 
 
 <div class="wrap">
-  <div class="testbar" role="note"><b>Test 1.0.0</b><span class="tm">Saved on this device only. Never touches the live app.</span>
+  <div class="testbar" role="note"><b>Test 2.0.0-dev</b><span class="tm">Saved on this device only. Never touches the live app.</span>
     <span class="tb"><button type="button" id="loadSample">Load sample jobs</button><button type="button" id="clearAll">Clear all</button></span></div>
   <header>
     <div>
@@ -336,7 +336,7 @@ function render(){
   const cells=()=>{let h="";for(let i=0;i<days;i++){const s=addDays(start,i);h+=`<div class="cell${isWD(s)?"":" we"}" data-d="${s}"></div>`}return h};
 
   let html=`<div class="row head"><div class="name">Job</div><div class="days">`;
-  for(let i=0;i<days;i++){const s=addDays(start,i),d=fromISO(s),w=d.getUTCDay();const mo=d.getUTCDate()===1||w===1;html+=`<div class="dh${isWD(s)?"":" we"}${s===TODAY?" today":""}" data-d="${s}"><div class="mo">${mo?MON[d.getUTCMonth()]+(d.getUTCDate()<=7&&d.getUTCMonth()===0?" "+String(d.getUTCFullYear()).slice(2):""):""}</div><div class="dw">${isWD(s)?DOW[w].slice(0,2):DOW[w][0]}</div><div class="dn">${d.getUTCDate()}</div></div>`}
+  for(let i=0;i<days;i++){const s=addDays(start,i),d=fromISO(s),w=d.getUTCDay();const mo=w===1||(d.getUTCDate()===1&&isWD(s));html+=`<div class="dh${isWD(s)?"":" we"}${s===TODAY?" today":""}" data-d="${s}"><div class="mo">${mo?MON[d.getUTCMonth()]+(d.getUTCDate()<=7&&d.getUTCMonth()===0?" "+String(d.getUTCFullYear()).slice(2):""):""}</div><div class="dw">${isWD(s)?DOW[w].slice(0,2):DOW[w][0]}</div><div class="dn">${d.getUTCDate()}</div></div>`}
   html+=`</div></div>`;
   list.forEach((j,idx)=>{
     const nv=j.visits.length,ne=j.events.length;

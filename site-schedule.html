@@ -317,7 +317,7 @@ function render(){
   const cells=()=>{let h="";for(let i=0;i<days;i++){const s=addDays(start,i);h+=`<div class="cell${isWD(s)?"":" we"}" data-d="${s}"></div>`}return h};
 
   let html=`<div class="row head"><div class="name">Job</div><div class="days">`;
-  for(let i=0;i<days;i++){const s=addDays(start,i),d=fromISO(s),w=d.getUTCDay();const mo=d.getUTCDate()===1||w===1;html+=`<div class="dh${isWD(s)?"":" we"}${s===TODAY?" today":""}" data-d="${s}"><div class="mo">${mo?MON[d.getUTCMonth()]+(d.getUTCDate()<=7&&d.getUTCMonth()===0?" "+String(d.getUTCFullYear()).slice(2):""):""}</div><div class="dw">${isWD(s)?DOW[w].slice(0,2):DOW[w][0]}</div><div class="dn">${d.getUTCDate()}</div></div>`}
+  for(let i=0;i<days;i++){const s=addDays(start,i),d=fromISO(s),w=d.getUTCDay();const mo=w===1||(d.getUTCDate()===1&&isWD(s));html+=`<div class="dh${isWD(s)?"":" we"}${s===TODAY?" today":""}" data-d="${s}"><div class="mo">${mo?MON[d.getUTCMonth()]+(d.getUTCDate()<=7&&d.getUTCMonth()===0?" "+String(d.getUTCFullYear()).slice(2):""):""}</div><div class="dw">${isWD(s)?DOW[w].slice(0,2):DOW[w][0]}</div><div class="dn">${d.getUTCDate()}</div></div>`}
   html+=`</div></div>`;
   list.forEach((j,idx)=>{
     const nv=j.visits.length,ne=j.events.length;
