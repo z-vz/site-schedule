@@ -89,6 +89,36 @@ button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-vis
 .testbar .tb{display:flex;gap:6px;margin-left:auto}
 .testbar button{padding:3px 8px;font-size:12px}
 @media (max-width:640px){.testbar{padding:4px 8px;font-size:11px}.testbar .tm{display:none}}
+/* range picker */
+.dr{display:flex;align-items:center;gap:6px;font:inherit;font-size:13px;text-align:left;background:var(--bg);border:1px solid var(--line-strong);border-radius:6px;padding:7px 9px;min-width:0;width:100%;grid-column:span 2;cursor:pointer}
+.dr .wdn{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--muted);white-space:nowrap}
+.dr span:first-child{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rp-scrim{position:fixed;inset:0;z-index:70;background:rgba(10,14,12,.35);display:grid;place-items:center;padding:12px}
+.rp{background:var(--panel);color:var(--ink);border-radius:10px;width:min(340px,100%);padding:12px;display:grid;gap:8px;box-shadow:0 20px 50px rgba(0,0,0,.35)}
+.rp-h{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.rp-h b{font-family:var(--display);font-size:20px;text-transform:uppercase;letter-spacing:.03em}
+.rp-h button{padding:4px 10px}
+.rp-g{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;touch-action:pan-y}
+.rp-g .dn{font-size:11px;color:var(--muted);text-align:center;padding:2px 0}
+.rp-g button{border:0;border-radius:4px;padding:0;height:38px;font-family:var(--mono);font-size:13px;background:transparent}
+.rp-g button.we{color:var(--muted)}
+.rp-g button.td{box-shadow:inset 0 0 0 1px var(--accent)}
+.rp-g button.in{background:color-mix(in srgb,var(--accent) 18%,transparent);border-radius:0}
+.rp-g button.a,.rp-g button.b{background:var(--accent);color:var(--accent-ink);border-radius:4px}
+.rp-s{font-size:13px;min-height:1.3em}.rp-s b{font-family:var(--mono);font-weight:500}
+.rp-hint{font-size:12px;color:var(--muted)}
+.rp-a{display:flex;justify-content:flex-end;gap:8px}
+/* archive */
+.arch-l{display:grid;gap:6px;max-height:55vh;overflow:auto}
+.arch-r{display:flex;align-items:center;gap:8px;padding:8px;border:1px solid var(--line);border-radius:6px}
+.arch-r .t{flex:1;min-width:0}.arch-r .t b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.arch-r .t span{font-size:12px;color:var(--muted)}
+.linkbtn{background:none;border:0;padding:0;color:var(--muted);text-decoration:underline;text-underline-offset:2px;font:inherit;cursor:pointer}
+.linkbtn:hover{color:var(--ink)}
+/* zoom */
+.board{touch-action:pan-x pan-y}
+.board.zs .dh .dw{display:none}
+.zoomtip{position:fixed;left:50%;top:calc(12px + env(safe-area-inset-top,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:5px 11px;border-radius:999px;font-family:var(--mono);font-size:12px;z-index:60;pointer-events:none}
 .jump{position:relative;display:inline-flex;align-items:center;gap:6px;font:inherit;background:var(--panel);border:1px solid var(--line-strong);border-radius:6px;padding:7px 11px;cursor:pointer;overflow:hidden}
 .jump:hover{border-color:var(--ink)}.jump:focus-within{outline:2px solid var(--focus);outline-offset:1px}
 .jump input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;border:0;padding:0}
@@ -135,7 +165,7 @@ button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-vis
 .lrow .x{padding:6px 10px;color:var(--muted)}
 .lhead{display:flex;justify-content:space-between;align-items:center}
 .small{padding:4px 9px;font-size:13px}
-@media (max-width:520px){.lrow{grid-template-columns:1fr 1fr auto}.lrow input.vl{grid-column:1/3}.lrow.ev{grid-template-columns:1fr 1fr auto}.lrow.ev input.el{grid-column:1/3}}
+@media (max-width:520px){.lrow{grid-template-columns:1fr 1fr auto}.lrow .dr{grid-column:1/-1}.lrow input.vl{grid-column:1/3}.lrow.ev{grid-template-columns:1fr 1fr auto}.lrow.ev input.el{grid-column:1/3}}
 /* dialog */
 .scrim{position:fixed;inset:0;background:rgba(10,14,12,.45);display:grid;place-items:center;padding:16px;z-index:50}
 .dlg{background:var(--panel);color:var(--ink);border-radius:10px;width:min(580px,100%);max-height:calc(100vh - 32px);overflow:auto;padding:18px;display:grid;gap:12px;box-shadow:0 20px 50px rgba(0,0,0,.3)}
@@ -201,7 +231,7 @@ button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-vis
   <header>
     <div>
       <h1>Site Schedule</h1>
-      <div class="sub">Plan jobs across the weeks ahead. Scroll sideways through time, or use Go to date. Hold a job name and drag to set priority. Drag a bar to move it, drag its ends to change dates. Click an empty day on a job’s line to add another visit or a notification. Click a bar or ◆ to set its status.</div>
+      <div class="sub">Plan jobs across the weeks ahead. Scroll sideways through time, or use Go to date. Hold a job name and drag to set priority. Drag a bar to move it, drag its ends to change dates. Click an empty day on a job’s line to add another visit or a notification. Click a bar or ◆ to set its status. Pinch (or Ctrl + scroll) to zoom.</div>
     </div>
     <div class="tools">
       <button id="today">Today</button>
@@ -275,10 +305,11 @@ function jobDays(j,only){const s=new Set();j.visits.forEach(v=>{if(only&&v.statu
 
 // next visit = first visit still to finish; jobs with nothing ahead go to the bottom
 function nextVisit(j){return j.visits.find(v=>v.end>=TODAY)||null}
-function manualList(){return [...jobs].sort((a,b)=>(a.order??1e9)-(b.order??1e9)||a.start.localeCompare(b.start)||a.title.localeCompare(b.title))}
+const live=()=>jobs.filter(j=>!j.archived);
+function manualList(){return live().sort((a,b)=>(a.order??1e9)-(b.order??1e9)||a.start.localeCompare(b.start)||a.title.localeCompare(b.title))}
 function sorted(){
   if(sortMode==="manual")return manualList();
-  return [...jobs].sort((a,b)=>{const na=nextVisit(a),nb=nextVisit(b);
+  return live().sort((a,b)=>{const na=nextVisit(a),nb=nextVisit(b);
     if(na&&nb)return na.start.localeCompare(nb.start)||a.title.localeCompare(b.title);
     if(na)return -1;if(nb)return 1;return b.end.localeCompare(a.end)});
 }
@@ -294,6 +325,21 @@ function setStatus(t){$("#status").textContent=t}
 function save(job){
   if(col){const {id,...body}=job;col.doc(id).set(JSON.parse(JSON.stringify(body))).catch(e=>setStatus("Couldn't save: "+(e&&e.message||"try again")))}
   else ls.set("ss.jobs",jobs);
+}
+// archiving keeps the job (and all its visits) but hides it from the chart and counts
+function archive(id,on){const j=byId(id);if(!j)return;j.archived=on;if(on)j.archivedAt=TODAY;else delete j.archivedAt;save(j);render();setStatus(on?`Archived “${j.title}”. Find it under Archived.`:`Restored “${j.title}”`)}
+function openArchive(){
+  const list=jobs.filter(j=>j.archived).sort((a,b)=>(b.archivedAt||"").localeCompare(a.archivedAt||"")||b.end.localeCompare(a.end));
+  modal(`<h2>Archived jobs</h2><div class="sub" style="margin:0">Hidden from the schedule but kept with all their visits. Restore one to put it back.</div>
+    <div class="arch-l" id="arch-l">${list.length?list.map(j=>`<div class="arch-r" data-id="${j.id}"><span class="dot" style="background:var(--${j.color})"></span><div class="t"><b>${esc(j.title)}</b><span>${j.client?esc(j.client)+" · ":""}${fmt(j.start)} – ${fmt(j.end)}${j.archivedAt?" · archived "+fmt(j.archivedAt):""}</span></div><button type="button" data-restore="${j.id}">Restore</button><button type="button" class="danger" data-kill="${j.id}" aria-label="Delete ${esc(j.title)} for good">Delete</button></div>`).join(""):`<div class="wd">Nothing archived.</div>`}</div>
+    <div class="acts"><div></div><div><button type="button" id="arch-close">Done</button></div></div>`,"Archived jobs");
+  $("#arch-close").onclick=closeModal;
+  $("#arch-l").addEventListener("click",e=>{
+    const r=e.target.closest("[data-restore]");if(r){archive(r.dataset.restore,false);openArchive();return}
+    const k=e.target.closest("[data-kill]");if(!k)return;
+    if(k.dataset.armed!=="1"){k.dataset.armed="1";k.textContent="Delete for good?";return}
+    remove(k.dataset.kill);setStatus("Deleted for good");openArchive();
+  });
 }
 function remove(id){
   jobs=jobs.filter(j=>j.id!==id);
@@ -322,13 +368,13 @@ function render(){
   // summary
   // next 4 weeks from today, Mon–Fri only
   const n4=addDays(TODAY,27),booked=new Set();
-  jobs.forEach(j=>jobDays(j,"booked").forEach(d=>{if(d>=TODAY&&d<=n4)booked.add(d)}));
+  live().forEach(j=>jobDays(j,"booked").forEach(d=>{if(d>=TODAY&&d<=n4)booked.add(d)}));
   let wdView=0;for(let d=TODAY;d<=n4;d=addDays(d,1))if(isWD(d))wdView++;
-  const upcoming=jobs.filter(j=>j.visits.some(v=>v.end>=TODAY&&v.status!=="done")).length;
-  $("#summary").innerHTML=`<span>Next 4 weeks (Mon–Fri):</span><span>Booked <b>${booked.size} / ${wdView}</b> days</span><span>Free <b>${wdView-booked.size}</b></span><span>Active jobs <b>${upcoming}</b></span>`;
+  const upcoming=live().filter(j=>j.visits.some(v=>v.end>=TODAY&&v.status!=="done")).length;
+  $("#summary").innerHTML=`<span>Next 4 weeks (Mon–Fri):</span><span>Booked <b>${booked.size} / ${wdView}</b> days</span><span>Free <b>${wdView-booked.size}</b></span><span>Active jobs <b>${upcoming}</b></span>${jobs.length>live().length?`<button type="button" class="linkbtn" id="openArch">Archived (${jobs.length-live().length})</button>`:""}`;
   // coming up
   const lim=addDays(TODAY,14),soon=[];
-  jobs.forEach(j=>j.events.forEach((e,ei)=>{if(e.date>=TODAY&&e.date<=lim&&e.status!=="done")soon.push({j,e,ei})}));
+  live().forEach(j=>j.events.forEach((e,ei)=>{if(e.date>=TODAY&&e.date<=lim&&e.status!=="done")soon.push({j,e,ei})}));
   soon.sort((a,b)=>a.e.date.localeCompare(b.e.date));
   $("#soon").innerHTML=soon.length?soon.map(({j,e,ei})=>{const n=diff(TODAY,e.date);const w=n===0?"Today":n===1?"Tomorrow":fmt(e.date);return `<li><button data-item="${j.id}" data-k="e" data-i="${ei}"><span class="when${n<=1?" now":""}">${w}</span><span>${esc(e.label||"Notification")}${e.status==="tentative"?" (unconfirmed)":""}</span><span class="job">${esc(j.title)}</span></button></li>`}).join(""):`<li class="none">Nothing due. Click an empty day on a job’s line to add a delivery, inspection or other notification.</li>`;
 
@@ -358,7 +404,7 @@ function render(){
   const ti=diff(start,TODAY);
   if(ti>=0&&ti<days)html+=`<div class="todayline" style="left:calc(var(--namew) + ${cx(0,ti)} + ${colW(ti)}/2 - 1px)"></div>`;
   const board=$("#board"),sl=board.scrollLeft;
-  board.innerHTML=`<div class="grid">${html}</div>`+(jobs.length?"":`<div class="empty">No jobs yet. Click <b>+ Add job</b>, or click a day in the “New job” row to start a job on that date.</div>`);
+  board.innerHTML=`<div class="grid">${html}</div>`+(live().length?"":`<div class="empty">No jobs yet. Click <b>+ Add job</b>, or click a day in the “New job” row to start a job on that date.</div>`);
   board.scrollLeft=sl;
 }
 
@@ -394,13 +440,13 @@ function editItem(job,k,i){
   const isV=k==="v",it=isV?job.visits[i]:job.events[i];if(!it)return;
   const names=isV?ST:EST;let st=it.status;
   const f=modal(`<h2>${isV?"Visit":"Notification"}</h2><div class="sub" style="margin:0">${esc(job.title)}</div>
-    ${isV?`<div class="two"><div class="f"><label for="i-s">Start</label><input type="date" id="i-s" value="${it.start}" required></div><div class="f"><label for="i-e">Finish</label><input type="date" id="i-e" value="${it.end}" required></div></div>`
+    ${isV?`<div class="f"><label>Dates</label><input type="hidden" id="i-s" value="${it.start}"><input type="hidden" id="i-e" value="${it.end}"><button type="button" class="dr" id="i-dr"><span>${rangeText(it.start,it.end)}</span><span class="wdn">${jobDays({visits:[it]}).size} work days</span></button></div>`
          :`<div class="f"><label for="i-d">Date</label><input type="date" id="i-d" value="${it.date}" required></div>`}
     <div class="f"><label for="i-l">Label</label><input id="i-l" value="${esc(it.label)}" placeholder="${isV?"e.g. Fix-out":"e.g. Cabinets delivered"}"></div>
     <div class="f"><label>Status</label><div class="stat" id="i-st">${Object.keys(names).map(s=>`<button type="button" data-st="${s}" aria-pressed="${s===st}">${names[s].split(" /")[0]}</button>`).join("")}</div></div>
     <div class="acts"><div><button type="button" class="danger" id="i-del">Delete</button></div><div><button type="button" id="i-job">Edit job</button><button type="button" id="i-cancel">Cancel</button><button type="submit" class="primary">Save</button></div></div>`,isV?"Edit visit":"Edit notification");
   $("#i-st").onclick=e=>{const b=e.target.closest("[data-st]");if(!b)return;st=b.dataset.st;$("#i-st").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)))};
-  if(isV)$("#i-s").onchange=()=>{if($("#i-e").value<$("#i-s").value)$("#i-e").value=$("#i-s").value};
+  if(isV)$("#i-dr").onclick=()=>pickRange($("#i-s").value,$("#i-e").value,(a,b)=>{$("#i-s").value=a;$("#i-e").value=b;$("#i-dr").innerHTML=`<span>${rangeText(a,b)}</span><span class="wdn">${jobDays({visits:[{start:a,end:b}]}).size} work days</span>`});
   $("#i-cancel").onclick=closeModal;
   $("#i-job").onclick=()=>{closeModal();openForm(job)};
   let armed=false;const del=$("#i-del");
@@ -413,11 +459,49 @@ function editItem(job,k,i){
   $("#i-l").focus();
 }
 
+// pick a start and end in one go: tap the first day, then the last day
+function pickRange(a0,b0,done){
+  let a=a0||null,b=b0||null,view=(a||TODAY).slice(0,7)+"-01";
+  const el=document.createElement("div");el.className="rp-scrim";
+  el.innerHTML=`<div class="rp" role="dialog" aria-label="Pick dates"><div class="rp-h"><button type="button" data-nav="-1" aria-label="Previous month">‹</button><b id="rp-m"></b><button type="button" data-nav="1" aria-label="Next month">›</button></div>
+    <div class="rp-g" id="rp-g"></div><div class="rp-s" id="rp-s"></div><div class="rp-hint" id="rp-hint"></div>
+    <div class="rp-a"><button type="button" data-x="1">Cancel</button><button type="button" class="primary" data-ok="1">Done</button></div></div>`;
+  document.body.appendChild(el);
+  const close=()=>el.remove();
+  const draw=()=>{
+    const f=fromISO(view),y=f.getUTCFullYear(),mo=f.getUTCMonth();
+    el.querySelector("#rp-m").textContent=MON[mo]+" "+y;
+    const lead=(f.getUTCDay()+6)%7,dim=new Date(Date.UTC(y,mo+1,0)).getUTCDate();
+    let h=["Mo","Tu","We","Th","Fr","Sa","Su"].map(x=>`<div class="dn">${x}</div>`).join("")+"<div></div>".repeat(lead);
+    for(let i=1;i<=dim;i++){const d=y+"-"+pad(mo+1)+"-"+pad(i);
+      const c=[isWD(d)?"":"we",d===TODAY?"td":"",d===a?"a":"",d===b?"b":"",a&&b&&d>a&&d<b?"in":""].filter(Boolean).join(" ");
+      h+=`<button type="button" data-d="${d}" class="${c}" aria-label="${fmt(d)}">${i}</button>`}
+    el.querySelector("#rp-g").innerHTML=h;
+    const e=b||a;
+    el.querySelector("#rp-s").innerHTML=a?`<b>${fmt(a)}</b> → <b>${b?fmt(b):"…"}</b>${e?` · ${jobDays({visits:[{start:a,end:e}]}).size} work days`:""}`:"";
+    el.querySelector("#rp-hint").textContent=!a?"Tap the first day":!b?"Now tap the last day (or Done for one day)":"Tap a day to start again";
+    el.querySelector("[data-ok]").disabled=!a;
+  };
+  el.addEventListener("click",e=>{
+    if(e.target===el||e.target.closest("[data-x]")){close();return}
+    const n=e.target.closest("[data-nav]");if(n){const f=fromISO(view);view=toISO(new Date(Date.UTC(f.getUTCFullYear(),f.getUTCMonth()+ +n.dataset.nav,1)));draw();return}
+    const d=e.target.closest("[data-d]");if(d){const v=d.dataset.d;if(!a||b){a=v;b=null}else if(v<a){a=v}else{b=v}draw();return}
+    if(e.target.closest("[data-ok]")&&a){close();done(a,b||a)}
+  });
+  el.addEventListener("keydown",e=>{if(e.key==="Escape"){e.stopPropagation();close()}});
+  // swipe left/right to change month
+  let sx=null;const g=el.querySelector("#rp-g");
+  g.addEventListener("touchstart",e=>{sx=e.touches[0].clientX},{passive:true});
+  g.addEventListener("touchend",e=>{if(sx==null)return;const dx=e.changedTouches[0].clientX-sx;sx=null;if(Math.abs(dx)>50){el.querySelector(`[data-nav="${dx<0?1:-1}"]`).click()}},{passive:true});
+  draw();el.querySelector("[data-ok]").focus();
+}
+const rangeText=(a,b)=>a===b?fmt(a):fmt(a)+" – "+fmt(b);
+
 // full job form
 function openForm(job,preset){
   const isNew=!job;
   const j=job?structuredClone(job):{id:newId(),title:"",client:"",color:COLORS[jobs.length%COLORS.length],notes:"",visits:[{start:preset||TODAY,end:addDays(preset||TODAY,4),label:"",status:"booked"}],events:[]};
-  const vRow=(v,i)=>`<div class="lrow" data-i="${i}"><input type="date" class="vs" aria-label="Visit ${i+1} start" value="${v.start}" required><input type="date" class="ve" aria-label="Visit ${i+1} finish" value="${v.end}" required><input class="vl" aria-label="Visit ${i+1} label" placeholder="${i===0?"e.g. Frame & sheet":"e.g. Fix-out"}" value="${esc(v.label)}"><select class="vst" aria-label="Visit ${i+1} status">${stOpts(v.status)}</select><button type="button" class="x" data-rmv="${i}" aria-label="Remove visit ${i+1}">✕</button></div>`;
+  const vRow=(v,i)=>`<div class="lrow" data-i="${i}"><input type="hidden" class="vs" value="${v.start}"><input type="hidden" class="ve" value="${v.end}"><button type="button" class="dr" data-pick="${i}" aria-label="Visit ${i+1} dates: ${rangeText(v.start,v.end)}. Change"><span>${rangeText(v.start,v.end)}</span><span class="wdn">${jobDays({visits:[v]}).size}d</span></button><input class="vl" aria-label="Visit ${i+1} label" placeholder="${i===0?"e.g. Frame & sheet":"e.g. Fix-out"}" value="${esc(v.label)}"><select class="vst" aria-label="Visit ${i+1} status">${stOpts(v.status)}</select><button type="button" class="x" data-rmv="${i}" aria-label="Remove visit ${i+1}">✕</button></div>`;
   const eRow=(e,i)=>`<div class="lrow ev" data-i="${i}"><input type="date" class="ed" aria-label="Notification ${i+1} date" value="${e.date}" required><input class="el" aria-label="Notification ${i+1} text" placeholder="e.g. Cabinets delivered" value="${esc(e.label)}"><select class="est" aria-label="Notification ${i+1} status">${stOpts(e.status,EST)}</select><button type="button" class="x" data-rme="${i}" aria-label="Remove notification ${i+1}">✕</button></div>`;
   const f=modal(`<h2>${isNew?"Add job":"Edit job"}</h2>
     <div class="f"><label for="f-title">Job</label><input id="f-title" required placeholder="e.g. Deck & pergola" value="${esc(j.title)}"></div>
@@ -426,7 +510,7 @@ function openForm(job,preset){
     <div class="f"><div class="lhead"><label>Notifications</label><button type="button" class="small" id="add-e">+ Add notification</button></div><div class="list" id="elist"></div></div>
     <div class="f"><label>Colour</label><div class="colors" id="f-colors">${COLORS.map(c=>`<button type="button" data-c="${c}" aria-label="Colour ${c.slice(1)}" aria-pressed="${c===j.color}" style="background:var(--${c})"></button>`).join("")}</div></div>
     <div class="f"><label for="f-notes">Notes</label><textarea id="f-notes" placeholder="Materials, access, crew…">${esc(j.notes)}</textarea></div>
-    <div class="acts"><div>${isNew?"":`<button type="button" class="danger" id="f-del">Delete job</button>`}</div><div><button type="button" id="f-cancel">Cancel</button><button class="primary" type="submit">${isNew?"Add job":"Save"}</button></div></div>`,isNew?"Add job":"Edit job");
+    <div class="acts"><div>${isNew?"":`<button type="button" id="f-arch">Archive job</button>`}</div><div><button type="button" id="f-cancel">Cancel</button><button class="primary" type="submit">${isNew?"Add job":"Save"}</button></div></div>`,isNew?"Add job":"Edit job");
     // read inputs back into j
   const pull=()=>{
     j.visits=[...document.querySelectorAll("#vlist .lrow")].map(r=>({start:r.querySelector(".vs").value,end:r.querySelector(".ve").value,label:r.querySelector(".vl").value.trim(),status:r.querySelector(".vst").value}));
@@ -442,14 +526,16 @@ function openForm(job,preset){
     if(!ok){$("#f-wd").textContent="Each visit’s finish must be on or after its start";return}
     const t={visits:j.visits};$("#f-wd").textContent=`${jobDays(t).size} work days across ${j.visits.length} visit${j.visits.length>1?"s":""}`};
   $("#vlist").addEventListener("change",e=>{const r=e.target.closest(".lrow");if(e.target.classList.contains("vs")){const en=r.querySelector(".ve");if(!en.value||en.value<e.target.value)en.value=e.target.value}wd()});
-  $("#vlist").addEventListener("click",e=>{const b=e.target.closest("[data-rmv]");if(!b)return;pull();j.visits.splice(+b.dataset.rmv,1);draw()});
+  const pickVisit=i=>{pull();const v=j.visits[i];pickRange(v.start,v.end,(a,b)=>{pull();j.visits[i].start=a;j.visits[i].end=b;draw()})};
+  $("#vlist").addEventListener("click",e=>{const pk=e.target.closest("[data-pick]");if(pk){pickVisit(+pk.dataset.pick);return}
+    const b=e.target.closest("[data-rmv]");if(!b)return;pull();j.visits.splice(+b.dataset.rmv,1);draw()});
   $("#elist").addEventListener("click",e=>{const b=e.target.closest("[data-rme]");if(!b)return;pull();j.events.splice(+b.dataset.rme,1);draw()});
-  $("#add-v").onclick=()=>{pull();const last=j.visits[j.visits.length-1];const s=last&&last.end?addDays(last.end,7):TODAY;j.visits.push({start:s,end:s,label:"",status:"booked"});draw();document.querySelector("#vlist .lrow:last-child .vs").focus()};
+  $("#add-v").onclick=()=>{pull();const last=j.visits[j.visits.length-1];const s=last&&last.end?addDays(last.end,7):TODAY;pickRange(s,null,(a,b)=>{pull();j.visits.push({start:a,end:b,label:"",status:"booked"});draw()})};
   $("#add-e").onclick=()=>{pull();j.events.push({date:(j.visits[0]&&j.visits[0].start)||TODAY,label:"",status:"booked"});draw();document.querySelector("#elist .lrow:last-child .el").focus()};
   $("#f-colors").addEventListener("click",e=>{const b=e.target.closest("[data-c]");if(!b)return;j.color=b.dataset.c;document.querySelectorAll("#f-colors button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)))});
   $("#f-cancel").onclick=closeModal;
   let armed=false;
-  if(!isNew)$("#f-del").onclick=e=>{if(!armed){armed=true;e.target.textContent="Click again to delete";return}closeModal();remove(j.id)};
+  if(!isNew)$("#f-arch").onclick=()=>{closeModal();archive(j.id,true)};
   f.addEventListener("submit",e=>{e.preventDefault();pull();
     if(!j.visits.length||!j.visits.every(v=>v.start&&v.end&&v.end>=v.start)){wd();return}
     j.events=j.events.filter(x=>x.date).map(x=>({date:x.date,label:x.label||"Notification",status:x.status}));
@@ -459,11 +545,34 @@ function openForm(job,preset){
     render();
   });
   draw();$("#f-title").focus();
+  // new job: after you name it, Enter or Next jumps to the dates
+  if(isNew)$("#f-title").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();pickVisit(0)}});
 }
 
 // board interactions
 const board=$("#board");
 // slim the job column while the day grid is scrolled sideways (phones only, via CSS)
+// zoom: two-finger pinch on phones, Ctrl/⌘ + scroll or trackpad pinch on desktop.
+// Scales the day columns around the point between your fingers; remembered on this device.
+let zoom=Math.min(2.5,Math.max(.5,+ls.get("ss.zoom")||1)),pinch=null,ztipT=null;
+function baseW(){const cs=getComputedStyle(document.documentElement);return [parseFloat(cs.getPropertyValue("--dayw")),parseFloat(cs.getPropertyValue("--wew"))]}
+function applyZoom(z,cxClient){
+  z=Math.min(2.5,Math.max(.5,z));const b=board,[dw,ww]=baseW();
+  const nameW=b.querySelector(".row.head .name")?.getBoundingClientRect().width||0;
+  const px=cxClient==null?nameW:cxClient-b.getBoundingClientRect().left;
+  const content=b.scrollLeft+px-nameW,ratio=z/zoom;
+  zoom=z;b.style.setProperty("--dayw",(dw*z).toFixed(2)+"px");b.style.setProperty("--wew",(ww*z).toFixed(2)+"px");
+  b.classList.toggle("zs",z<.8);
+  b.scrollLeft=Math.max(0,content*ratio-(px-nameW));
+  ls.set("ss.zoom",+z.toFixed(2));
+  let t=$("#zoomtip");if(!t){t=document.createElement("div");t.id="zoomtip";t.className="zoomtip";document.body.appendChild(t)}
+  t.textContent=Math.round(z*100)+"%";clearTimeout(ztipT);ztipT=setTimeout(()=>t.remove(),700);
+}
+board.addEventListener("touchstart",e=>{if(e.touches.length===2&&!rdrag&&!drag&&!mdrag){const[a,c]=e.touches;pinch={d:Math.hypot(a.clientX-c.clientX,a.clientY-c.clientY),z:zoom};if(hold){clearTimeout(hold.timer);hold=null}}},{passive:true});
+board.addEventListener("touchmove",e=>{if(!pinch||e.touches.length!==2)return;e.preventDefault();const[a,c]=e.touches;
+  const d=Math.hypot(a.clientX-c.clientX,a.clientY-c.clientY);applyZoom(pinch.z*d/pinch.d,(a.clientX+c.clientX)/2)},{passive:false});
+board.addEventListener("touchend",e=>{if(e.touches.length<2)pinch=null},{passive:true});
+board.addEventListener("wheel",e=>{if(!e.ctrlKey&&!e.metaKey)return;e.preventDefault();applyZoom(zoom*Math.exp(-e.deltaY*.002),e.clientX)},{passive:false});
 let growing=false;
 board.addEventListener("scroll",()=>{
   const sl=board.scrollLeft;
@@ -572,10 +681,11 @@ board.addEventListener("click",e=>{const m=e.target.closest("[data-mk]");if(m&&e
 
 // put date d at the left edge of the day grid
 function goTo(d,keepSlim){const b=$("#board"),h=b.querySelector(`.row.head .dh[data-d="${d}"]`);if(!h)return;b.scrollLeft=h.offsetLeft;if(!keepSlim)b.classList.remove("slim")}
-function scrollToToday(){home=homeStart();if(ensureRange(home,home))render();goTo(home);anchor=$("#board").scrollLeft}
+function scrollToToday(){if(zoom!==1&&!board.style.getPropertyValue("--dayw")){const z=zoom;zoom=1;applyZoom(z);$("#zoomtip")?.remove()}home=homeStart();if(ensureRange(home,home))render();goTo(home);anchor=$("#board").scrollLeft}
 $("#today").onclick=scrollToToday;
 $("#jump").addEventListener("change",e=>{const d=e.target.value;if(!d)return;if(ensureRange(addDays(d,-1),d))render();goTo(addDays(d,-1),true);e.target.blur()});
 $("#add").onclick=()=>openForm();
+document.addEventListener("click",e=>{if(e.target.closest("#openArch"))openArchive()});
 document.querySelectorAll("#sortseg button").forEach(b=>b.onclick=()=>{sortMode=b.dataset.sort;render()});
 
 // test site: sample jobs built around today's date

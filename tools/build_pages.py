@@ -68,3 +68,11 @@ style_end = src.index("</style>") + len("</style>")
 page = head + src[:style_end].replace("<title>Site Schedule</title>", f"<title>Site Schedule {version} (test)</title>") + "\n</head>\n<body>\n" + src[style_end:] + "\n</body>\n</html>\n"
 (root / "index.html").write_text(page)
 print("index.html", len(page), "bytes, version", version)
+
+# Preview copy for Claude (not committed): same page without the document wrapper,
+# published as a private Claude artifact so changes can be checked before pushing.
+preview = src.replace("<title>Site Schedule</title>", f"<title>Site Schedule Preview</title>", 1)
+preview = preview.replace(f"<b>Test {version}</b>", f"<b>Preview {version}</b>", 1)
+(root / "preview").mkdir(exist_ok=True)
+(root / "preview" / "preview.html").write_text(preview)
+print("preview/preview.html", len(preview), "bytes")
